@@ -1,2 +1,2 @@
-!#/bin/bash
+#!/bin/bash
 mongod --dbpath /tmp/mongodb
