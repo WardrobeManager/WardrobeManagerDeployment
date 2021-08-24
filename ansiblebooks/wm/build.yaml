@@ -1,0 +1,18 @@
+---
+- hosts: localhost
+  become: true
+
+  tasks:
+  - name: create docker image after building repo
+    command: docker build -t wmms . 
+    args:
+      chdir: /Users/dev/Projects/Workspaces/WardrobeManagerDeployment/dockerizers/wm
+
+  - name: tag docker image
+    command: docker tag wmms:latest trekcampy/wmms:latest
+
+  - name: push docker image to docker hub
+    command: docker push trekcampy/wmms:latest 
+
+  - name: remove image from local server
+    command: docker rmi wmms:latest trekcampy/wmms:latest
