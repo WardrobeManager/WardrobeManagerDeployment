@@ -16,4 +16,5 @@ spec:
       containers:
       - name: wmms
         image: trekcampy/wmms:latest
+        imagePullPolicy: Always
 ---
