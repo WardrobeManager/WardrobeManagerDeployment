@@ -17,4 +17,11 @@ spec:
       - name: wmms
         image: trekcampy/wmms:latest
         imagePullPolicy: Always
+        volumeMounts:
+        - mountPath: /tmp/ImageDb
+          name: images
+      volumes:
+      - name: images
+        hostPath:
+          path: /images
 ---
