@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: umms-deployment
+spec:
+  replicas: 5
+  selector:
+    matchLabels:
+      app: umms
+  template:
+    metadata:
+      labels:
+        app: umms
+        selector: umms
+    spec:
+      containers:
+      - name: umms
+        image: trekcampy/umms:latest
+        imagePullPolicy: Always
+---

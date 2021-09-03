@@ -15,3 +15,6 @@ nodes:
   - hostPath: /tmp/ImageDb
     containerPath: /images
 - role: worker
+  extraMounts:
+  - hostPath: /tmp/ImageDb
+    containerPath: /images

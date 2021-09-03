@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: wmms-deployment
+spec:
+  replicas: 10
+  selector:
+    matchLabels:
+      app: wmms
+  template:
+    metadata:
+      labels:
+        app: wmms
+        selector: wmms
+    spec:
+      containers:
+      - name: wmms
+        image: trekcampy/wmms:latest
+        imagePullPolicy: Always
+        volumeMounts:
+        - mountPath: /tmp/ImageDb
+          name: images
+      volumes:
+      - name: images
+        hostPath:
+          path: /images
+---

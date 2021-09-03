@@ -23,3 +23,6 @@ WardrobeManagerMS
 Label To Text
 
   GOOGLE_APPLICATION_CREDENTIALS=/Users/dev/Projects/Workspaces/LabelToTextMS/credetials/elite-academy-229305-bf9691c2471b.json ./LabelToTextMS --logtostderr=true
+
+Ansible Playbook
+  sudo ansible-playbook -i ansiblebooks/config/hosts ansiblebooks/wm/build-deploy.yml --connection=local
