@@ -3,8 +3,14 @@
   become: true
   vars:
     root: /Users/dev/Projects/Workspaces/WardrobeManagerDeployment/
+    ansible_python_interpreter: /opt/homebrew/bin/python3
 
   tasks:
+  - name: Log into DockerHub
+    docker_login:
+      username: trekcampy
+      password: cobra123
+
   - name: create docker image after building repo
     command: docker build -t wmms . 
     args:
@@ -18,6 +24,9 @@
 
   - name: remove image from local server
     command: docker rmi wmms:latest trekcampy/wmms:latest
+
+  - name: delete the application
+    command: kubectl delete -f "{{ root }}"kube/wmms/wmms-deployment-5-with-vol.yml
 
   - name: deploy the application
     command: kubectl apply -f "{{ root }}"kube/wmms/wmms-deployment-5-with-vol.yml
