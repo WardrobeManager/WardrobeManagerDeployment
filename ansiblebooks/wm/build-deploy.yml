@@ -27,6 +27,7 @@
 
   - name: delete the application
     command: kubectl delete -f "{{ root }}"kube/wmms/wmms-deployment-5-with-vol.yml
+    ignore_errors: yes
 
   - name: deploy the application
     command: kubectl apply -f "{{ root }}"kube/wmms/wmms-deployment-5-with-vol.yml

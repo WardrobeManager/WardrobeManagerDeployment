@@ -27,6 +27,7 @@
 
   - name: delete the application
     command: kubectl delete -f "{{ root }}"kube/umms/umms-deployment-5.yml
+    ignore_errors: yes
 
   - name: deploy the application
     command: kubectl apply -f "{{ root }}"kube/umms/umms-deployment-5.yml
