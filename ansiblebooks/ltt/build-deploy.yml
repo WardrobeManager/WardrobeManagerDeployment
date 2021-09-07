@@ -1,0 +1,35 @@
+---
+- hosts: localhost
+  become: true
+  vars:
+    root: /Users/dev/Projects/Workspaces/WardrobeManagerDeployment/
+    ansible_python_interpreter: /opt/homebrew/bin/python3
+
+  tasks:
+  - name: Log into DockerHub
+    docker_login:
+      username: trekcampy
+      password: cobra123
+
+  - name: create docker image after building repo
+    command: docker build -t ltt . --no-cache=true 
+    args:
+      chdir: "{{ root }}dockerizers/ltt"
+
+  - name: tag docker image
+    command: docker tag ltt:latest trekcampy/ltt:latest
+
+  - name: push docker image to docker hub
+    command: docker push trekcampy/ltt:latest 
+
+  - name: remove image from local server
+    command: docker rmi ltt:latest trekcampy/ltt:latest
+
+  - name: delete the application
+    command: kubectl delete -f "{{ root }}"kube/ltms/ltms-deployment.yml
+
+  - name: deploy the application
+    command: kubectl apply -f "{{ root }}"kube/ltms/ltms-deployment.yml
+
+  - name: enable ltms service
+    command: kubectl apply -f "{{ root }}"kube/ltms/ltms-service.yml

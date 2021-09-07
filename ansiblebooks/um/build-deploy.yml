@@ -1,0 +1,35 @@
+---
+- hosts: localhost
+  become: true
+  vars:
+    root: /Users/dev/Projects/Workspaces/WardrobeManagerDeployment/
+    ansible_python_interpreter: /opt/homebrew/bin/python3
+
+  tasks:
+  - name: Log into DockerHub
+    docker_login:
+      username: trekcampy
+      password: cobra123
+
+  - name: create docker image after building repo
+    command: docker build -t um . --no-cache=true  
+    args:
+      chdir: "{{ root }}dockerizers/um"
+
+  - name: tag docker image
+    command: docker tag um:latest trekcampy/um:latest
+
+  - name: push docker image to docker hub
+    command: docker push trekcampy/um:latest 
+
+  - name: remove image from local server
+    command: docker rmi um:latest trekcampy/um:latest
+
+  - name: delete the application
+    command: kubectl delete -f "{{ root }}"kube/umms/umms-deployment-5.yml
+
+  - name: deploy the application
+    command: kubectl apply -f "{{ root }}"kube/umms/umms-deployment-5.yml
+
+  - name: enable umms service
+    command: kubectl apply -f "{{ root }}"kube/umms/umms-service-nodeport.yml

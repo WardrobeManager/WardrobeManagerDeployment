@@ -12,7 +12,7 @@
       password: cobra123
 
   - name: create docker image after building repo
-    command: docker build -t wmms . 
+    command: docker build -t wmms . --no-cache=true 
     args:
       chdir: "{{ root }}dockerizers/wm"
 
