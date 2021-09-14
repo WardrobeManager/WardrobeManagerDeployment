@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ltms-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ltms
+  template:
+    metadata:
+      labels:
+        app: ltms
+        selector: ltms
+    spec:
+      containers:
+      - name: ltms
+        image: trekcampy/ltt:latest
+        imagePullPolicy: Always
+---
